@@ -59,7 +59,7 @@ class PostController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            // 'body' => 'required',
+            'body' => 'required',
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -85,22 +85,33 @@ class PostController extends Controller
         return redirect()->route('posts.index')
 
                         ->with('success','Photo updated successfully');
-        
-        // if(Post::create($request->only(['title', 'body', 'img_name', 'img_path']) + ['img_name' => $this->img_name, 'img_path' => $this->img_path])){
-
-        //     return redirect()->back()->with('success', "Post has been created successfully!");
-        // }else {
-        //     return redirect()->back()->with('error', "Post failed to create!");
-        // }
-
-        // Post::create($request->all());
 
     }
 
     public function show($id)
     {
+        $shareButtons = \Share::page(
+
+            'https://www.itsolutionstuff.com',
+
+            'Your share text comes here',
+
+        )
+
+        ->facebook()
+
+        ->twitter()
+
+        ->linkedin()
+
+        ->telegram()
+
+        ->whatsapp()        
+
+        ->reddit();
+        
         $post = Post::where('id', $id)->get();
-        return view('blog-details', compact('post'));
+        return view('blog-details', compact('shareButtons','post'));
     
     }
      /**

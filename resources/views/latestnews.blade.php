@@ -22,19 +22,19 @@
                                     <!-- Single Blog Item -->
                                     <div class="col-12 col-md-6 col-lg-4">
                                         <div class="single-blog-item mb-100">
-                                            <a href="{{ URl('admin/posts/' . $post->id) }}">
+                                            <a href="{{ URl('posts/' . $post->id) }}">
                                                 <img src="{{ asset($post->img_path) }}" alt="">
                                             </a>
                                             <!-- Blog Content -->
                                             <div class="blog-content">
-                                                <a href="{{ URl('admin/posts/' . $post->id) }}"
+                                                <a href="{{ URl('posts/' . $post->id) }}"
                                                     class="post-title">{{ $post->title }}</a>
                                                 <p>{!! Str::limit($post->body, 150) !!}</p>
                                                 <div class="post-meta">
-                                                    <a href="{{ URl('admin/posts/' . $post->id) }}"><i
+                                                    <a href="{{ URl('posts/' . $post->id) }}"><i
                                                             class="icon_clock_alt"></i>
                                                         {{ $post->created_at->format('j F, Y') }}</a>
-                                                    <a href="{{ URl('admin/posts/' . $post->id) }}"><i
+                                                    <a href="{{ URl('posts/' . $post->id) }}"><i
                                                             class="icon_chat_alt"></i> {{ $post->comments->count() }}
                                                         Comments</a>
                                                 </div>

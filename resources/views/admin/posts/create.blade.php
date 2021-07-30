@@ -21,7 +21,7 @@
                         <div class="alert alert-danger"> {{ Session::get('error') }}</div>
                         @endif
 
-                    <form method="post" action="{{ route('admin.posts') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
                         <div class="form-group">
 
                             @csrf

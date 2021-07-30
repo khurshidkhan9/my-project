@@ -48,14 +48,15 @@
                             </div>
                             <p>{!! $object->body !!}.</p>
 
-
+                            
                             <!-- Post Share  -->
                             <div class="post-share-area mb-30">
-                                <a href="#" class="facebook"><i class="fa fa-facebook"></i> Share</a>
-                                <a href="#" class="tweet"><i class="fa fa-twitter"></i> Tweet</a>
-                                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i> Share</a>
-                                <a href="#" class="pinterest"><i class="fa fa-pinterest"></i> Share</a>
+                                @foreach ($post as $post)
+                                {!! Share::page(url('/post/'. $post->slug))->facebook()->twitter()->whatsapp() !!}
+                                @endforeach
                             </div>
+
+
 
                             <!-- Comments Area -->
                             <!-- Comments Area -->
@@ -82,27 +83,28 @@
                 <div class="col-lg-6">
                   <input type="email" name="message-email" class="form-control mb-30" placeholder="Your Email">
                 </div> --}}
-                        <div class="col-12">
-                            <textarea name="body" class="form-control mb-30"
-                                placeholder="Your Message"></textarea>
-                        </div>
-                        <input type="hidden" name="post_id" value="{{ $object->id }}" />
+                                            <div class="col-12">
+                                                <textarea name="body" class="form-control mb-30"
+                                                    placeholder="Your Message"></textarea>
+                                            </div>
+                                            <input type="hidden" name="post_id" value="{{ $object->id }}" />
 
-                        {{-- <input type="hidden" name="parent_id" value="{{ $object->id }}" /> --}}
-                        <div class="col-12">
-                            <button type="submit" class="btn dento-btn">Reply</button>
-                        </div>
+                                            {{-- <input type="hidden" name="parent_id" value="{{ $object->id }}" /> --}}
+                                            <div class="col-12">
+                                                <button type="submit" class="btn dento-btn">Reply</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            @else
+                                <button type="button" onclick="location.href='{{ URL('login') }}'"
+                                    class="btn btn-primary mt-3">Login to comment</button>
+                            @endif
+                        @endforeach
+
                     </div>
-                </form>
-
-            </div>
-        @else
-            <button type="button" onclick="location.href='{{URL('login')}}'" class="btn btn-primary mt-3">Login to comment</button>
-        @endif
-        @endforeach
-
-        </div>
-        </div>
+                </div>
 
                 <!-- Dento Sidebar Area -->
                 <div class="col-12 col-lg-4">

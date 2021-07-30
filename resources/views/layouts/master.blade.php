@@ -17,10 +17,10 @@
     <!-- Page level plugin CSS-->
     <link href="{{ asset('admin/vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
 
-    
+
     <!-- Custom styles for this template-->
     <link href="{{ asset('admin/css/sb-admin.css') }}" rel="stylesheet">
-    
+
     <script type="text/javascript" src="{{ asset('admin/js/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/js/tinymce/init_tinymce.js') }}"></script>
 </head>
@@ -114,7 +114,7 @@
         <!-- Sidebar -->
         <ul class="sidebar navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ URL('admin/home')}}">
+                <a class="nav-link" href="{{ URL('admin/home') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -165,9 +165,20 @@
         </ul>
 
         <div id="content-wrapper">
+            <div class="container-fluid">
 
-            @yield('content')
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Overview</li>
+                </ol>
 
+                @yield('content')
+
+            </div>
+            <!-- /.container-fluid -->
             <!-- Sticky Footer -->
             <footer class="sticky-footer">
                 <div class="container my-auto">

@@ -5,7 +5,7 @@
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Data Table Example
+            Post Table
         </div>
         <div class="card-body">
           @if ($message = Session::get('success'))
@@ -45,16 +45,16 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td><img src="{{ asset($post->img_path) }}" width="100px" alt="" srcset=""></td>
                                 <td>{{ $post->title }}</td>
-                                <td> <textarea name="" id="" cols="30" rows="10"> {{ $post->body }}</textarea></td>
+                                <td> <textarea name="" id="" cols="20" rows="3"> {{ $post->body }}</textarea></td>
                                 <td>{{ $post->created_at }}</td>
                                 <td>{{ $post->comments->count() }}</td>
                                 <td>
 
                                     <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                                        <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}">Show</a>
-                                        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
                                         @csrf
                                         @method('DELETE')
+                                        <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}">Show</a>
+                                        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
 
                                         <button type="submit" class="btn btn-danger">Delete</button>
 

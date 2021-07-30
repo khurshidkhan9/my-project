@@ -264,41 +264,10 @@
     </section>
     <!-- Dento Service Area End -->
 
-    <!-- Dento Pricing Table Area Start -->
-    <section class="dento-pricing-table-area section-padding-100">
-        <div class="container">
-            <div class="row">
-                <!-- Section Heading -->
-                <div class="col-12">
-                    <div class="section-heading text-center">
-                        <h2>Gellary</h2>
-                        <div class="line"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                @if (count($photos) >= 1)
-
-                    @foreach ($photos as $photo)
-                        <div class="col-12 col-sm-6 col-md-4">
-                            <div class="single-dentist-area mb-100">
-                                <img src="{{ asset($photo->photo_path) }}" alt="{{ $photo->name }}">
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            
-                @else
-                    <div class="col-12">
-                        <div class="single-blog-item mb-100">
-                            <h5 class="txt-center">No Post Found!</h5>
-                        </div>
-                    </div>
-                @endif
-        </div>
-    </section>
-    <!-- Dento Pricing Table Area End -->
+    <!-- gallery start -->
+  
+    @include('gallery')
+    <!-- End -->
 
     <!-- Book An Oppointment Area Start -->
     <section class="book-an-oppointment-area section-padding-100 bg-img bg-gradient-overlay jarallax clearfix"

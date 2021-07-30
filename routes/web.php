@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SocialShareController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +23,7 @@ Route::resource('/', PageController::class);
 Route::resource('admin/posts', PostController::class);
 Route::resource('comments', CommentController::class);
 Route::resource('admin/photos', PhotoController::class);
+Route::get('social-share', [SocialShareController::class, 'index']);
 
 Route::get('/about', function ()
 {
@@ -38,8 +40,10 @@ Route::get('/contact', function ()
   
 Auth::routes();
 Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
-Route::get('admin/posts', [PostController::class, 'index'])->name('admin.posts')->middleware('is_admin');
-Route::get('admin/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('is_admin');
+// Route::get('admin/posts', [PostController::class, 'index'])->name('admin.posts')->middleware('is_admin');
+// Route::get('admin/posts/create', [PostController::class, 'create'])->name('posts.create')->middleware('is_admin');
+Route::resource('admin/posts', PostController::class)->middleware('is_admin');
+Route::get('posts/{id}', [PostController::class, 'show']);
 
 Route::get('/profile', [ UsersController::class, 'index'])->name('Profile');
 

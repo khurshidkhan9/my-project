@@ -21,7 +21,7 @@
                         <div class="alert alert-danger"> {{ Session::get('error') }}</div>
                         @endif
 
-                    <form method="post" action="{{ route('admin.posts') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('posts.update', $post->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">

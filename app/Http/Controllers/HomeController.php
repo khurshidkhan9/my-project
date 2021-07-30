@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Post;
+use App\Models\Photo;
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -41,8 +44,11 @@ class HomeController extends Controller
 
     {
 
+        $user = User::all();
         $post = Post::all();
-        return view('admin.index', compact('post'));
+        $photo = Photo::all();
+        $comment = Comment::all();
+        return view('admin.index', compact('user', 'post', 'photo', 'comment'));
 
     }
 

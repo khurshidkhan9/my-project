@@ -11,6 +11,7 @@
           </div>
 
           <div class="row">
+              @if (count($photos) >= 1)
               <div id="blogCarousel" class="carousel slide" data-ride="carousel">
 
                   <ol class="carousel-indicators">
@@ -20,7 +21,6 @@
 
                   <!-- Carousel items -->
                   <div class="carousel-inner">
-                      @if (count($photos) >= 1)
                           @foreach ($photos->chunk(3) as $three)
                               <div class="carousel-item @if ($loop->first) {{ 'active' }} @endif"">
                                   @foreach ($three as $photo)
@@ -49,5 +49,4 @@
       </div>
       <!-- row Carousel-->
 
-      </div>
   </section>

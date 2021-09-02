@@ -11,19 +11,9 @@
 
             <div class="card">
 
-                <div class="card-header">Create Post</div>
+                <div class="card-header">Create User</div>
 
                 <div class="card-body">
-                    @if(count($errors) > 0)
-
-                    @foreach($errors->all() as $error)
-
-                        <div class="alert alert-danger">{{ $error }}</div>
-
-                    @endforeach
-
-                @endif
-
                     @if (Session::has('success'))
                         <div class="alert alert-success"> {{ Session::get('success') }}</div>
                         @endif
@@ -31,33 +21,38 @@
                         <div class="alert alert-danger"> {{ Session::get('error') }}</div>
                         @endif
 
-                    <form method="post" action="{{ route('posts.store') }}" enctype="multipart/form-data">
+                    <form method="post" action="{{URL('admin/users')}}" enctype="multipart/form-data">
                         <div class="form-group">
 
                             @csrf
 
-                            <label class="label">Post Image: </label>
+                            <label class="label">User Image: </label>
 
                             <input type="file" name="file" class="" required />
 
                         </div>
-
                         <div class="form-group">
 
-                            @csrf
 
-                            <label class="label">Post Title: </label>
+                            <label class="label">User Name: </label>
 
-                            <input type="text" name="title" class="form-control" required />
+                            <input type="text" name="name" class="form-control" required />
 
                         </div>
-
                         <div class="form-group">
 
-                            <label class="label">Post Body: </label>
 
-                            <textarea class="form-control" id="tinymce" name="body" rows="3" placeholder="Enter a description for your post"></textarea>
+                            <label class="label">User email: </label>
 
+                            <input type="text" name="email" class="form-control" required />
+
+                        </div>
+                        <div class="form-group">
+
+
+                            <label class="label">User Password: </label>
+
+                            <input type="password" name="password" class="form-control" required />
 
                         </div>
 

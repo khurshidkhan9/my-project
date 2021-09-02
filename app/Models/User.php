@@ -22,7 +22,9 @@ class User extends Authenticatable
         'password',
         'is_admin',
         'avatar',
-        'img_path'
+        'img_path',
+        'phone',
+        'address'
     ];
 
     /**
@@ -43,4 +45,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
 }

@@ -10,7 +10,7 @@
 
             <div class="pull-left">
 
-                <h2>Edit Product</h2>
+                <h2>Edit Photo</h2>
 
             </div>
 
@@ -49,32 +49,15 @@
 
     <div class="col-md-3">
 
-        <form action="{{ route('photos.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('photos.store') }}" enctype="multipart/form-data" class="dropzone dropzone-style" id="my-awesome-dropzone">
 
             @csrf
-
             <div class="form-group">
-                <label>Add Name</label>
-                <div class="input-group">
-                   <input class="form-control" type="text" name="name" id="">
-                </div>
-                <img id='img-upload' />
-            </div>
-            <div class="form-group">
-                <label>Upload Image</label>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                            Browse… <input type="file" name="image">
-                        </span>
-                    </span>
-                </div>
-                <img id='img-upload' />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Upload">
+                <label for="my-input">Title</label>
+                <input id="my-input" class="form-control" type="text" name="name">
             </div>
         </form>
+
     </div>
 
 </div>

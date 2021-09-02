@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
-    <!-- DataTables Example -->
     <div class="mb-2">
-        <a href="{{ URL('admin/posts/create') }}" class="btn btn-primary">Create Post</a>
-        <button class="btn btn-danger delete_all" data-url="{{ url('admin/posts') }}">Delete All Selected</button>
+        <a href="{{ URL('admin/user/create') }}" class="btn btn-primary">Create User</a>
+        <button class="btn btn-danger delete_all" data-url="{{ url('admin/users') }}">Delete All Selected</button>
     </div>
+    <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
@@ -21,11 +21,11 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th width="50px"><input type="checkbox" id="master"></th>  
+                            <th width="50px"><input type="checkbox" id="master"></th>
                             <th>ID</th>
                             <th>Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
+                            <th>Name</th>
+                            <th>Email</th>
                             <th>Create date</th>
                             <th>Comments</th>
                             <th width="280px">Action</th>
@@ -34,7 +34,7 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th width="50px"></th>  
+                            <th width="50px"></th>
                             <th>ID</th>
                             <th>Image</th>
                             <th>Title</th>
@@ -46,22 +46,22 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach ($posts as $key=>$post)
-                            <tr id="tr_{{ $post->id }}">
-                                <td><input type="checkbox" class="sub_chk" data-id="{{ $post->id }}"></td>
+                        @foreach ($users as $key=>$user)
+                            <tr id="tr_{{ $user->id }}">
+                                <td><input type="checkbox" class="sub_chk" data-id="{{ $user->id }}"></td>
                                 <td>{{ ++$key }}</td>
-                                <td><img src="{{ asset($post->img_path) }}" width="100px" alt="" srcset=""></td>
-                                <td>{{ $post->title }}</td>
-                                <td> <textarea name="" id="" cols="20" rows="3"> {{ $post->body }}</textarea></td>
-                                <td>{{ $post->created_at }}</td>
-                                <td>{{ $post->comments->count() }}</td>
+                                <td><img src="{{ asset($user->img_path) }}" width="100px" alt="" srcset=""></td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->created_at }}</td>
+                                <td>{{ $user->comments->count() }}</td>
                                 <td>
 
-                                    <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                    <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}">Show</a>
-                                        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
+                                        <a class="btn btn-info" href="{{ route('users.show', $user->id) }}">Show</a>
+                                        <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a>
 
                                         <button type="submit" class="btn btn-danger">Delete</button>
 

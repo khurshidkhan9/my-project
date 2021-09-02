@@ -38,8 +38,3 @@
   });
 
 })(jQuery); // End of use strict
-
-
-// tinymce.init({
-//   selector: '#mytextarea'
-// });

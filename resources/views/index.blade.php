@@ -20,9 +20,9 @@
                                     their
                                     studies without any difficulty regarding school tuition fee.</p>
                                 <div class="welcome-btn-group">
-                                    <a href="#" class="btn dento-btn mx-2" data-animation="fadeInUp"
+                                    <a href="{{ URL('donation-form') }}" class="btn dento-btn mx-2" data-animation="fadeInUp"
                                         data-delay="500ms">Donate fund</a>
-                                    <a href="#" class="btn dento-btn mx-2 active" data-animation="fadeInUp"
+                                    <a href="{{ URL('contact')}}" class="btn dento-btn mx-2 active" data-animation="fadeInUp"
                                         data-delay="700ms">Contact
                                         Us</a>
                                 </div>

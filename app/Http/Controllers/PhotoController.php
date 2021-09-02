@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Photo;
 use Illuminate\Http\Request;
+use DB;
 
 class PhotoController extends Controller
 {
@@ -40,7 +41,6 @@ class PhotoController extends Controller
         $request->validate([
 
             'name' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
         ]);
 
@@ -50,9 +50,10 @@ class PhotoController extends Controller
 
   
 
-        if ($image = $request->file('image')) {
+        if ($image = $request->file('file')) {
 
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            // $profileImage = date('Ymd') . "." . $image->getClientOriginalExtension();
+            $profileImage = $image->getClientOriginalName();
 
             $path = $image->storeAs('uploads/photos', $profileImage, 'public');
 
@@ -61,7 +62,7 @@ class PhotoController extends Controller
 
         }else{
 
-            unset($input['image']);
+            unset($input['file']);
 
         }
 
@@ -163,5 +164,13 @@ class PhotoController extends Controller
         }
         $photo ->delete();
         return redirect()->route('photos.index')->with('success', 'Photo has been deleted successfully!');
+    }
+
+    public function deleteall(Request $request)
+    {
+       $ids = $request->ids;  
+        DB::table("photos")->whereIn('id',explode(",",$ids))->delete();  
+        return response()->json(['success'=>"Photos Deleted successfully."]);  
+
     }
 }

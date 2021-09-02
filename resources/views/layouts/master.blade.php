@@ -20,9 +20,12 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('admin/css/sb-admin.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/js/dist/dropzone.css') }}" rel="stylesheet">
 
     <script type="text/javascript" src="{{ asset('admin/js/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('admin/js/tinymce/init_tinymce.js') }}"></script>
+    <script src="{{ asset('admin/js/dist/dropzone.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">  
 </head>
 
 <body id="page-top">
@@ -139,7 +142,20 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="postsDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Users</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="postsDropdown">
+                    <a class="dropdown-item" href="{{ URL('admin/users') }}">Show All Users</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Create Users</h6>
+                    <a class="dropdown-item" href="{{ URL('admin/users/create') }}">Create New User</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="postsDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-list"></i>
                     <span>Posts</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="postsDropdown">
@@ -152,7 +168,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="photoDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <i class="fas fa-fw fa-newspaper"></i>
                     <span>Photos</span>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="photoDropdown">
@@ -160,6 +176,16 @@
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">Create Photos</h6>
                     <a class="dropdown-item" href="{{ URL('admin/photos/create') }}">Create New photo</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="msgDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-text-height"></i>
+                    <span>Messages</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="msgDropdown">
+                    <a class="dropdown-item" href="{{ URL('admin/messages') }}">Show All Messages</a>
                 </div>
             </li>
         </ul>
@@ -170,10 +196,17 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="{{URL('admin/home')}}">Dashboard</a>
                     </li>
-                    <li class="breadcrumb-item active">Overview</li>
+                    <?php $segments = ''; ?>
+                    @foreach(Request::segments() as $segment)
+                        <?php $segments .= '/'.$segment; ?>
+                        <li class="breadcrumb-item">
+                            <a href="{{ URL($segments) }}">{{$segment}}</a>
+                        </li>
+                    @endforeach
                 </ol>
+                
 
                 @yield('content')
 
@@ -183,7 +216,7 @@
             <footer class="sticky-footer">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright © Your Website 2019</span>
+                        <span>Copyright © Amin Foundation - Fundraiser 2021 Made BY Khurshidkhan</span>
                     </div>
                 </div>
             </footer>
@@ -239,5 +272,98 @@
     <script src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
 
 </body>
+<script type="text/javascript">  
+    $(document).ready(function () {  
+  
+        $('#master').on('click', function(e) {  
+         if($(this).is(':checked',true))    
+         {  
+            $(".sub_chk").prop('checked', true);    
+         } else {    
+            $(".sub_chk").prop('checked',false);    
+         }    
+        });  
+  
+        $('.delete_all').on('click', function(e) {  
+  
+            var allVals = [];    
+            $(".sub_chk:checked").each(function() {    
+                allVals.push($(this).attr('data-id'));  
+            });    
+  
+            if(allVals.length <=0)    
+            {    
+                alert("Please select row.");    
+            }  else {    
+  
+                var check = confirm("Are you sure you want to delete ?");    
+                if(check == true){    
+  
+                    var join_selected_values = allVals.join(",");   
+  
+                    $.ajax({  
+                        url: $(this).data('url'),  
+                        type: 'DELETE',  
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},  
+                        data: 'ids='+join_selected_values,  
+                        success: function (data) {
+                              
+                            if (data['success']) {  
+                                $(".sub_chk:checked").each(function() {    
+                                    $(this).parents("tr").remove();  
+                                });  
+                                alert(data['success']);  
+                            } else if (data['error']) {  
+                                alert(data['error']);  
+                            } else {  
+                                alert('Whoops Something went wrong!!');  
+                            }  
+                        },  
+                        error: function (data) {  
+                            alert(data.responseText);  
+                        }  
+                    });  
+  
+                  $.each(allVals, function( index, value ) {  
+                      $('table tr').filter("[data-row-id='" + value + "']").remove();  
+                  });  
+                }    
+            }    
+        });  
+  
+        // $('[data-toggle=confirmation]').confirmation({  
+        //     rootSelector: '[data-toggle=confirmation]',  
+        //     onConfirm: function (event, element) {  
+        //         element.trigger('confirm');  
+        //     }  
+        // });  
+  
+        // $(document).on('confirm', function (e) {  
+        //     var eele = e.target;  
+        //     e.preventDefault();  
+  
+        //     $.ajax({  
+        //         url: ele.href,  
+        //         type: 'DELETE',  
+        //         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},  
+        //         success: function (data) {  
+        //             if (data['success']) {  
+        //                 $("#" + data['tr']).slideUp("slow");  
+        //                 alert(data['success']);  
+        //             } else if (data['error']) {  
+        //                 alert(data['error']);  
+        //             } else {  
+        //                 alert('Whoops Something went wrong!!');  
+        //             }  
+        //         },  
+        //         error: function (data) {  
+        //             alert(data.responseText);  
+        //         }  
+        //     });  
+  
+        //     return false;  
+        // });  
+    });  
+</script>  
 
 </html>

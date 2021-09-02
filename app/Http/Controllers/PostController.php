@@ -30,7 +30,7 @@ class PostController extends Controller
 
         if ($request->file('file')) {
             $imagePath = $request->file('file');
-            $imageName = $imagePath->getClientOriginalName();
+            $imageName = rand(5, 30) . "." . $imagePath->getClientOriginalExtension();
 
             $path = $request->file('file')->storeAs('uploads/posts', $imageName, 'public');
 
@@ -65,10 +65,22 @@ class PostController extends Controller
 
         if ($request->file('file')) {
             $imagePath = $request->file('file');
-            $imageName = $imagePath->getClientOriginalName();
+            $imageName = date('Ymd') . "." . $imagePath->getClientOriginalExtension();
             $input['image'] = $imageName;
 
-            $path = $request->file('file')->storeAs('uploads/posts', $imageName, 'public');
+            $post = Post::find($post->id);
+            $path = "./" . $post->img_path;
+
+            if (empty($post->img_path)) {
+                $path = $request->file('file')->storeAs('uploads/posts', $imageName, 'public');
+            }else {
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+                
+                $path = $request->file('file')->storeAs('uploads/posts', $imageName, 'public');
+            }
+
 
         }else{
 
@@ -127,6 +139,26 @@ class PostController extends Controller
             unlink($path);
         }
         $post ->delete();
-        return redirect()->route('admin.posts')->with('success', 'Photo has been deleted successfully!');
+        return redirect()->back()->with('success', 'Posts has been deleted successfully!');
+    }
+    public function deleteall(Request $request)
+    {
+       $ids = $request->ids;  
+        DB::table("posts")->whereIn('id',explode(",",$ids))->delete();  
+        return response()->json(['success'=>"Posts Deleted successfully."]);  
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Post  $photo
+     * @return \Illuminate\Http\Response
+     */
+
+    public function services()
+    {
+        $posts = Post::all();
+        return view('services', compact('posts'));
     }
 }

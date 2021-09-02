@@ -10,7 +10,7 @@
 
             <div class="pull-left">
 
-                <h2>Edit Product</h2>
+                <h2>Edit Photos</h2>
 
             </div>
 

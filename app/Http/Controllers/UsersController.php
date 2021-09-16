@@ -41,25 +41,30 @@ class UsersController extends Controller
             'name' => 'required',
             'email' => 'required',
             'password' => 'required',
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->file('file')) {
             $imagePath = $request->file('file');
             $imageName = $imagePath->getClientOriginalName();
-
             $path = $request->file('file')->storeAs('uploads/', $imageName, 'public');
+            $this->img_name = $imageName;
+            $this->img_path = '/storage/' . $path;
+            if (user::create($request->only(['name', 'email', 'password', 'avatar', 'img_path']) + ['avatar' => $this->img_name, 'img_path' => $this->img_path])) {
 
-        }
+                return redirect()->back()->with('success', "User has been created with avatar successfully!");
+            } else {
+                return redirect()->back()->with('error', "User failed to create!");
 
-        $this->img_name = $imageName;
-        $this->img_path = '/storage/' . $path;
+            }
 
-        if (user::create($request->only(['name', 'email', 'password', 'avatar', 'img_path']) + ['avatar' => $this->img_name, 'img_path' => $this->img_path])) {
-
-            return redirect()->back()->with('success', "User has been created successfully!");
         } else {
-            return redirect()->back()->with('error', "User failed to create!");
+            if(user::create($request->only(['name', 'email', 'password']))){
+                return redirect()->back()->with('success', "User has been created successfully!");
+            } else {
+                return redirect()->back()->with('error', "User failed to create!");
+
+            }
         }
     }
 
@@ -71,7 +76,8 @@ class UsersController extends Controller
      */
     public function show(user $user)
     {
-        return view('admin.users.show', compact('user'));
+        $obj = user::find($user->id);
+        return view('admin.users.show', compact('obj'));
     }
 
     /**
@@ -106,26 +112,26 @@ class UsersController extends Controller
 
             $user = User::find($id);
             $path = "./" . $user->img_path;
-            
+
             if (empty($user->img_path)) {
                 $path = $request->file('file')->storeAs('uploads/', $imageName, 'public');
-            }else {
+            } else {
                 if (file_exists($path)) {
                     unlink($path);
                 }
-                
+
                 $path = $request->file('file')->storeAs('uploads/', $imageName, 'public');
             }
 
         }
 
         $this->img_name = $imageName;
-        $this->img_path = '/storage/'.$path;
+        $this->img_path = '/storage/' . $path;
 
-        if(user::where('id', $id)->update($request->only(['name', 'email', 'password', 'avatar', 'img_path', 'phone', 'address']) + ['avatar' => $this->img_name, 'img_path' => $this->img_path])){
+        if (user::where('id', $id)->update($request->only(['name', 'email', 'password', 'avatar', 'img_path', 'phone', 'address']) + ['avatar' => $this->img_name, 'img_path' => $this->img_path])) {
 
             return redirect()->back()->with('success', "User has been Updated successfully!");
-        }else {
+        } else {
             return redirect()->back()->with('error', "User Update failed to create!");
         }
     }
@@ -139,7 +145,7 @@ class UsersController extends Controller
     public function destroy(user $user)
     {
         $path = "./" . $user->img_path;
-        if (file_exists($path)) {
+        if (file_exists($path) && !empty($user->avatar)) {
             unlink($path);
         }
         $user->delete();
@@ -148,9 +154,9 @@ class UsersController extends Controller
 
     public function deleteall(Request $request)
     {
-       $ids = $request->ids;  
-        DB::table("users")->whereIn('id',explode(",",$ids))->delete();  
-        return response()->json(['success'=>"Users Deleted successfully."]);  
+        $ids = $request->ids;
+        DB::table("users")->whereIn('id', explode(",", $ids))->delete();
+        return response()->json(['success' => "Users Deleted successfully."]);
 
     }
 
@@ -159,11 +165,18 @@ class UsersController extends Controller
 
         return view('profile');
     }
+    public function edit_profile()
+    {
+
+        return view('editprofile');
+    }
 
     public function storeImage(Request $request)
     {
         $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required',
+            'email' => 'required',
+            'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $id = $request->user_id;
@@ -178,9 +191,11 @@ class UsersController extends Controller
         $this->avatar = $imageName;
         $this->img_path = '/storage/' . $path;
 
-        $query = DB::update('update users set avatar = ?, img_path = ? where id = ?', [$this->avatar, $this->img_path, $id]);
-
-        return response()->json('Image uploaded successfully');
+        if(user::where('id', $id)->update($request->only(['name', 'email', 'password', 'avatar', 'img_path', 'phone', 'address']) + ['avatar' => $this->avatar, 'img_path' => $this->img_path])){
+            return redirect()->back()->with('success', "profile has been Updated successfully!");
+        } else {
+            return redirect()->back()->with('error', "profile Update failed!");
+        }
     }
 
 }

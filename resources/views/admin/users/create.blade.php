@@ -28,7 +28,7 @@
 
                             <label class="label">User Image: </label>
 
-                            <input type="file" name="file" class="" required />
+                            <input type="file" name="file" class="" />
 
                         </div>
                         <div class="form-group">

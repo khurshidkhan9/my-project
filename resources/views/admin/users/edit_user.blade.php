@@ -4,28 +4,31 @@
 
     <div class="main-body">
         @if (Session::has('success'))
-        <div class="alert alert-success"> {{ Session::get('success') }}</div>
+            <div class="alert alert-success"> {{ Session::get('success') }}</div>
         @endif
-    @if (Session::has('error'))
-        <div class="alert alert-danger"> {{ Session::get('error') }}</div>
+        @if (Session::has('error'))
+            <div class="alert alert-danger"> {{ Session::get('error') }}</div>
         @endif
         <div class="row">
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="{{ ($user->img_path) ? asset($user->img_path) : asset('storage/uploads/static-img/avatar7.png') }}"
+                            <img src="{{ $user->img_path ? asset($user->img_path) : asset('storage/uploads/static-img/avatar7.png') }}"
                                 alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
                             <div class="mt-3">
-                                <h4>{{ $user->name}}</h4>
-                                <p class="text-secondary mb-1">  @if ($user->is_admin == 1)
-                                    {{__('Admin')}}
-                                @else
-                                {{__('Member')}}
-                                    
-                                @endif</p>
-                                <p class="text-muted font-size-sm">{{ $user->address}}</p>
-                                <form method="post" action="{{ route('users.update', $user->id)}}" enctype="multipart/form-data">
+                                <h4>{{ $user->name }}</h4>
+                                <p class="text-secondary mb-1">
+                                    @if ($user->is_admin == 1)
+                                        {{ __('Admin') }}
+                                    @else
+                                        {{ __('Member') }}
+
+                                    @endif
+                                </p>
+                                <p class="text-muted font-size-sm">{{ $user->address }}</p>
+                                <form method="post" action="{{ route('users.update', $user->id) }}"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <input id="image-input" class="btn btn-primary mt-3" type="file" name="file"
@@ -114,43 +117,8 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="d-flex align-items-center mb-3">Project Status</h5>
-                                <p>Web Design</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"
-                                        aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>Website Markup</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 72%"
-                                        aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>One Page</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 89%"
-                                        aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>Mobile Template</p>
-                                <div class="progress mb-3" style="height: 5px">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 55%"
-                                        aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p>Backend API</p>
-                                <div class="progress" style="height: 5px">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 66%"
-                                        aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
-    </form>           
+            </form>
 
         </div>
     </div>

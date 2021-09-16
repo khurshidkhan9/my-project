@@ -105,10 +105,12 @@
                                             </li>
                                         @endif
                                     @else
-                                        <li class="nav-item dropdown">
-                                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                                {{ Auth::user()->name }}
+                                    
+                                    <li class="nav-item dropdown">
+                                        <a id="navbarDropdown" class="nav-link" href="#" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        <img src="{{ Auth::user()->img_path ? asset(Auth::user()->img_path) : asset('storage/uploads/static-img/avatar7.png') }}" width="30" alt="">
+                                        {{ Auth::user()->name }}
                                             </a>
 
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -123,6 +125,10 @@
                                                 </form>
                                                 <a class="dropdown-item"
                                                     href="{{ route('Profile') }}">{{ __('Profile') }}</a>
+                                                    @if (Auth::user()->is_admin == 1)
+                                                    <a class="dropdown-item"
+                                                    href="{{ route('admin.home') }}">{{ __('Admin Panel') }}</a>
+                                                    @endif
                                             </div>
                                         </li>
                                     @endguest
@@ -211,9 +217,11 @@
 
                         <p>We will send out weekly newest article and some great offers</p>
                         <!-- Newsletter Form -->
+                        <div id="message"></div>
                         <div class="footer-newsletter-form">
-                            <form action="#" method="post">
-                                <input type="email" name="nl-email" value="" placeholder="Email Address">
+                            <form id="newsletterform">
+                                @csrf
+                                <input type="email" name="email" value="" placeholder="Email Address">
                                 <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                             </form>
                         </div>
@@ -242,12 +250,10 @@
                 <div class="col-12">
                     <div class="copywrite-content">
                         <p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             <script>
                                 document.write(new Date().getFullYear());
                             </script> All rights reserved | made with <i class="fa fa-heart-o" style="color: red;"
                                 aria-hidden="true"></i> by KhurshidKhan</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </p>
                     </div>
                 </div>

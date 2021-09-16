@@ -26,6 +26,7 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Create date</th>
                             <th>Comments</th>
                             <th width="280px">Action</th>
@@ -37,8 +38,9 @@
                             <th width="50px"></th>
                             <th>ID</th>
                             <th>Image</th>
-                            <th>Title</th>
-                            <th>Description</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
                             <th>Create date</th>
                             <th>Comments</th>
                             <th width="280px">Action</th>
@@ -50,20 +52,27 @@
                             <tr id="tr_{{ $user->id }}">
                                 <td><input type="checkbox" class="sub_chk" data-id="{{ $user->id }}"></td>
                                 <td>{{ ++$key }}</td>
-                                <td><img src="{{ asset($user->img_path) }}" width="100px" alt="" srcset=""></td>
+                                <td><img src="{{ $user->img_path ? asset($user->img_path) : asset('storage/uploads/static-img/avatar7.png') }}" width="100px" alt="" srcset=""></td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>
+                                    @if ($user->is_admin == 1)
+                                    <span class="badge badge-pill badge-success">Admin</span>
+                                    @else
+                                    <span class="badge badge-pill badge-info">Member</span>
+                                    @endif
+                                </td>
                                 <td>{{ $user->created_at }}</td>
                                 <td>{{ $user->comments->count() }}</td>
                                 <td>
-
+                                    
                                     <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a class="btn btn-info" href="{{ route('users.show', $user->id) }}">Show</a>
-                                        <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a>
+                                        <a class="badge badge-info" href="{{ route('users.show', $user->id) }}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                                        <a class="badge badge-primary" href="{{ route('users.edit', $user->id) }}"><i class="fas fa-pencil-alt"></i></a>
 
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
 
                                     </form>
 

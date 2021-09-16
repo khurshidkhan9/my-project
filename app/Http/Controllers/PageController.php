@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Photo;
+use App\Models\user;
+use Illuminate\Support\Facades\DB;
+
 
 class PageController extends Controller
 {
@@ -84,5 +87,22 @@ class PageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function newsletter(Request $request)
+    {
+        $user = DB::table('users')->where('email', $request['email'])->first();
+        if ($user) {
+            return response()->json(['success'=>'You have been subscribed successfully']);
+        } else {
+            return response()->json(['error'=>'This email is not registered!']);
+        }
+        
     }
 }

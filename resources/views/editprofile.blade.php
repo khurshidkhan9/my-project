@@ -3,10 +3,24 @@
 @section('content')
 
 <div class="container emp-profile mt-5 mb-5">
+    <form method="post" id="upload-image-form" enctype="multipart/form-data">
+        @csrf
         <div class="row">
             <div class="col-md-4">
+                @if (Session::has('success'))
+            <div class="alert alert-success"> {{ Session::get('success') }}</div>
+        @endif
+        @if (Session::has('error'))
+            <div class="alert alert-danger"> {{ Session::get('error') }}</div>
+        @endif
                 <div>
                     <img  class="img-center img-circle" src="{{ asset(Auth::user()->img_path) }}" alt=""/>
+                    {{-- <div class="btn dento-btn">
+                        Change Photo --}}
+                        <input id="image-input" class="btn dento-btn mt-3" type="file" name="file" style="display: block;margin-left: auto;margin-right: auto;" />
+                        <span class="text-danger" id="image-input-error"></span>
+                        <input type="hidden" name="user_id" value="{{ Auth::user()->id}}">
+                    {{-- </div> --}}
                 </div>
             </div>
             <div class="col-md-6">
@@ -31,7 +45,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <a href="{{URL('profile/'.Auth::user()->id.'/edit')}}" class="btn dento-btn">Edit Profile</a>
+                <input type="submit" class="btn dento-btn" name="btnAddMore" value="Edit Profile"/>
             </div>
         </div>
         <div class="row">
@@ -40,43 +54,48 @@
             </div>
             <div class="col-md-8">
                 <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane f
+                    <br>ade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>{{Auth::user()->name}}</p>
+                                        <input type="text" class="form-control" name="name" id="" value="{{Auth::user()->name}}">
                                     </div>
                                 </div>
+                                <br>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Email</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>{{Auth::user()->email}}</p>
+                                        <input type="text" class="form-control" name="email" id="" value="{{Auth::user()->email}}">
                                     </div>
                                 </div>
+                                <br>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Phone</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>123 456 7890</p>
+                                        <input type="text" class="form-control" name="phone" id="" value="{{Auth::user()->phone}}">
                                     </div>
                                 </div>
+                                <br>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Profession</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>Web Developer and Designer</p>
+                                        <input type="text" class="form-control" name="address" id="" value="{{Auth::user()->address}}">
                                     </div>
                                 </div>
                     </div>
                 </div>
             </div>
         </div>
+    </form>           
 </div>
 
 

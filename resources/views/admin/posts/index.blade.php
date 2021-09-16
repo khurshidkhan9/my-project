@@ -60,10 +60,10 @@
                                     <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}">Show</a>
-                                        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}">Edit</a>
+                                        <a class="btn btn-info" href="{{ route('posts.show', $post->id) }}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                                        <a class="btn btn-primary" href="{{ route('posts.edit', $post->id) }}"><i class="fas fa-pencil-alt"></i></a>
 
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
 
                                     </form>
 

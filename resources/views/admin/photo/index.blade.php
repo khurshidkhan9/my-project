@@ -55,16 +55,16 @@
     
          
     
-                        <a class="btn btn-info" href="{{ route('photos.show',$photo->id) }}">Show</a>
+                        <a class="btn btn-info" href="{{ route('photos.show',$photo->id) }}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
     
           
     
-                        <a class="btn btn-primary" href="{{ route('photos.edit',$photo->id) }}">Edit</a>
+                        <a class="btn btn-primary" href="{{ route('photos.edit',$photo->id) }}"><i class="fas fa-pencil-alt"></i></a>
     
                         @csrf
                         @method('DELETE')
          
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         
                     </form>
     

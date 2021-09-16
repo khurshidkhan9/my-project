@@ -22,6 +22,7 @@ use App\Http\Controllers\ContactUsFormController;
 */
 
 Route::resource('/', PageController::class);
+Route::post('/newsletter', [PageController::class, 'newsletter'])->name('newsletter');
 Route::resource('admin/posts', PostController::class);
 Route::delete('admin/posts', [PostController::class, 'deleteAll']);
 
@@ -46,7 +47,8 @@ Route::get('/services', [PostController::class, 'services']);
 Route::resource('admin/users', UsersController::class);
 Route::delete('admin/users', [PostController::class, 'deleteAll']);
 Route::get('/profile', [ UsersController::class, 'show_profile'])->name('Profile');
-Route::post('/profile', [ UsersController::class, 'storeImage' ])->name('images.store');
+Route::get('/profile/{id}/edit', [ UsersController::class, 'edit_profile'])->name('editProfile');
+Route::post('/profile/{id}/edit', [ UsersController::class, 'storeImage' ])->name('images.store');
 
 Route::resource('admin/messages', ContactUsFormController::class)->middleware('is_admin');
 Route::get('admin/messages/{id}', [ContactUsFormController::class, 'markAsRead'])->middleware('is_admin');

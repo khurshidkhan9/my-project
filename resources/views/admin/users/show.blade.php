@@ -8,16 +8,16 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="{{ ($user->img_path) ? asset($user->img_path) : asset('storage/uploads/static-img/avatar7.png') }}" alt="Admin" class="rounded-circle" width="150">
+                    <img src="{{ ($obj->img_path) ? asset($obj->img_path) : asset('storage/uploads/static-img/avatar7.png') }}" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
-                      <h4>{{Auth::user()->name}}</h4>
-                      <p class="text-secondary mb-1">  @if ($user->is_admin == 1)
+                      <h4>{{$obj->name}}</h4>
+                      <p class="text-secondary mb-1">  @if ($obj->is_admin == 1)
                         {{__('Admin')}}
                     @else
                     {{__('Member')}}
                         
                     @endif</p>
-                      <p class="text-muted font-size-sm">{{Auth::user()->address}}</p>
+                      <p class="text-muted font-size-sm">{{$obj->address}}</p>
                     </div>
                   </div>
                 </div>
@@ -47,7 +47,7 @@
                       <h6 class="mb-0">Full Name</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        {{Auth::user()->name}}
+                        {{$obj->name}}
                     </div>
                   </div>
                   <hr>
@@ -56,7 +56,7 @@
                       <h6 class="mb-0">Email</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        {{Auth::user()->email}}
+                        {{$obj->email}}
                     </div>
                   </div>
                   <hr>
@@ -65,7 +65,7 @@
                       <h6 class="mb-0">Phone</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{Auth::user()->phone}}
+                      {{$obj->phone}}
                     </div>
                   </div>
                   <hr>
@@ -74,13 +74,13 @@
                       <h6 class="mb-0">Address</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{Auth::user()->address}}
+                      {{$obj->address}}
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-info " target="__blank" href="{{ route('users.edit', $user->id) }}">Edit</a>
+                      <a class="btn btn-info " target="__blank" href="{{ route('users.edit', $obj->id) }}">Edit</a>
                     </div>
                   </div>
                 </div>
